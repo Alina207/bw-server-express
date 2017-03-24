@@ -6,7 +6,7 @@ const User     = require('../models/user-model');
 
 const authRoutes = express.Router();
 
-
+// ------------ SIGNUP ------------ //
 authRoutes.post('/signup', (req, res, next) => {
   const username = req.body.username;
   const email    = req.body.email;
@@ -55,7 +55,7 @@ authRoutes.post('/signup', (req, res, next) => {
   });
 });
 
-// ------------ LOGIN OPTION A ------------
+// ------------ LOGIN ------------ //
 authRoutes.post('/login', (req, res, next) => {
   const passportFunction = passport.authenticate('local',
     (err, theUser, failureDetails) => {
@@ -84,11 +84,13 @@ authRoutes.post('/login', (req, res, next) => {
 });
 
 
+// ------------ LOGOUT ------------ //
 authRoutes.post('/logout', (req, res, next) => {
   req.logout();
   res.status(200).json({ message: 'Success.' });
 });
 
+// ------------ LOGGED IN ------------ //
 authRoutes.get('/loggedin', (req, res, next) => {
   if (req.isAuthenticated()) {
     res.status(200).json(req.user);
@@ -97,7 +99,6 @@ authRoutes.get('/loggedin', (req, res, next) => {
 
   res.status(401).json({ message: 'Unauthorized.' });
 });
-
 
 function gtfoIfNotLogged (req, res, next) {
   if (!req.isAuthenticated()) {
@@ -108,8 +109,9 @@ function gtfoIfNotLogged (req, res, next) {
   next();
 }
 
+// ------------ PRIVATE ONLY ------------ //
 authRoutes.get('/private', gtfoIfNotLogged, (req, res, next) => {
-  res.json({ message: 'Todays lucky number is 7677' });
+  res.json({ message: 'You have to be logged in to see that.' });
 });
 
 
