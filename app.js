@@ -41,8 +41,18 @@ app.use(passport.session());
 const passportSetup = require('./config/passport');
 passportSetup(passport);
 
+const cors = require('cors');
+app.use(cors());
+
 const index = require('./routes/index');
 app.use('/', index);
+const authroutes = require('./routes/auth-routes');
+app.use('/', authroutes);
+
+// connects ang to express
+app.use((req, res, next) => {
+  res.sendfile(__dirname + '/public/index.html');
+});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
