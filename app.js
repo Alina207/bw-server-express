@@ -8,8 +8,10 @@ const layouts      = require('express-ejs-layouts');
 const mongoose     = require('mongoose');
 const session      = require('express-session');
 const passport     = require('passport');
+const dotenv       = require('dotenv');
+const cors         = require('cors');
 
-
+dotenv.config();
 mongoose.connect('mongodb://localhost/bw-server-express');
 
 const app = express();
