@@ -11,12 +11,12 @@ authRoutes.post('/signup', (req, res, next) => {
   const username = req.body.username;
   const email    = req.body.email;
   const password = req.body.password;
-  if (!username || !password) {
-    res.status(400).json({ message: 'Provide username and password.' });
+  if (!email || !password) {
+    res.status(400).json({ message: 'Provide email and password.' });
     return;
   }
 
-  User.findOne({ username }, '_id', (err, foundUser) => {
+  User.findOne({ email }, '_id', (err, foundUser) => {
     if (err) {
       res.status(500).json({ message: 'Something went wrong.' });
       return;
@@ -107,6 +107,7 @@ function gtfoIfNotLogged (req, res, next) {
 
   next();
 }
+
 
 // ------------ PRIVATE ONLY ------------ //
 authRoutes.get('/private', gtfoIfNotLogged, (req, res, next) => {

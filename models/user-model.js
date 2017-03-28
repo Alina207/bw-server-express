@@ -6,6 +6,7 @@ const userSchema = new Schema({
   username: String,
   email: String,
   encryptedPassword: String,
+  articlesPosted: Object // ??
 }, {
   timestamps: true
 });

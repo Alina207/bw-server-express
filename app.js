@@ -12,7 +12,8 @@ const dotenv       = require('dotenv');
 const cors         = require('cors');
 
 dotenv.config();
-mongoose.connect('mongodb://localhost/bw-server-express');
+mongoose.connect(process.env.MONGODB_URI); //
+//
 
 const app = express();
 
@@ -31,6 +32,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(layouts);
+if (process.env.NODE_ENV !== 'production') {
+  app.use(cors({
+    credentials: true,
+    origin: ['http://localhost:4200', 'http://localhost:8000']
+  }));
+}
 app.use(session({
   secret: 'Its a secret shhh',
   resave: true,
@@ -43,13 +50,16 @@ app.use(passport.session());
 const passportSetup = require('./config/passport');
 passportSetup(passport);
 
-const cors = require('cors');
-app.use(cors());
+///////// ROUTES /////////
 
 const index = require('./routes/index');
 app.use('/', index);
+
 const authroutes = require('./routes/auth-routes');
 app.use('/', authroutes);
+
+const articlesApi = require('./routes/articles-api');
+app.use('/api', articlesApi);
 
 // connects ang to express
 app.use((req, res, next) => {
