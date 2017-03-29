@@ -42,7 +42,7 @@ router.post('/articles', (req, res, next) => {
 
     res.json({
       message: 'New clickbait added!',
-      // id: theArticle._id,
+      id: theArticle._id,
       // username: username,
       // userId: userId,
       // date: Date
