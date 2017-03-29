@@ -52,8 +52,8 @@ passportSetup(passport);
 
 ///////// ROUTES /////////
 
-const index = require('./routes/index');
-app.use('/', index);
+// const index = require('./routes/index');
+// app.use('/', index);
 
 const authroutes = require('./routes/auth-routes');
 app.use('/', authroutes);
